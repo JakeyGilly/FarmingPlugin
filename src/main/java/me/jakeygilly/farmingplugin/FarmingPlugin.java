@@ -2,7 +2,7 @@ package me.jakeygilly.farmingplugin;
 
 import me.jakeygilly.farmingplugin.CommandCompleter.GiveItemCompleter;
 import me.jakeygilly.farmingplugin.Commands.GiveItem;
-import me.jakeygilly.farmingplugin.utils.ItemManager;
+import me.jakeygilly.farmingplugin.listeners.FarmingToolListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FarmingPlugin extends JavaPlugin {
@@ -12,8 +12,7 @@ public final class FarmingPlugin extends JavaPlugin {
         // Plugin startup logic
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("giveitem").setTabCompleter(new GiveItemCompleter());
-        ItemManager.init();
-
+        getServer().getPluginManager().registerEvents(new FarmingToolListener(), this);
     }
 
     @Override

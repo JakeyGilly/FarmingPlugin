@@ -9,6 +9,14 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -44,18 +52,18 @@ public abstract class FarmingTool extends Item {
     public void setCurrentUpgrade(int currentUpgrade) { this.currentUpgrade = currentUpgrade; }
 
 
-    public abstract void onEquip(Player player);
-    public abstract void onUnequip(Player player);
-    public abstract void clickEntity(Player player, Entity target, boolean shifting);
-    public abstract void punchEntity(Player player, Entity target, double damage, boolean shifting);
-    public abstract void leftClickOnBlock(Player player, Block block, boolean shifting);
-    public abstract void leftClickOnAir(Player player, Block block, boolean shifting);
-    public abstract void rightClickOnBlock(Player player, Block block, boolean shifting);
-    public abstract void rightClickOnAir(Player player, Block block, boolean shifting);
-    public abstract void onBlockBreak(Player player, Block block, boolean sneaking);
-    public abstract void onDrop(Player player);
-    public abstract void onPickup(Player player);
-    public abstract void onUpgrade(Player player, ItemStack upgradeItem, int upgradeLevel);
+    public abstract void onEquip(PlayerItemHeldEvent event);
+    public abstract void onUnequip(PlayerItemHeldEvent event);
+    public abstract void clickEntity(PlayerInteractEntityEvent event);
+    public abstract void punchEntity(EntityDamageByEntityEvent event);
+    public abstract void leftClickOnBlock(PlayerInteractEvent event);
+    public abstract void leftClickOnAir(PlayerInteractEvent event);
+    public abstract void rightClickOnBlock(PlayerInteractEvent event);
+    public abstract void rightClickOnAir(PlayerInteractEvent event);
+    public abstract void onBlockBreak(BlockBreakEvent event);
+    public abstract void onDrop(PlayerDropItemEvent event);
+    public abstract void onPickup(EntityPickupItemEvent event);
+    public abstract void onUpgrade(InventoryClickEvent event);
 
     @Override
     public void give(Player player) {

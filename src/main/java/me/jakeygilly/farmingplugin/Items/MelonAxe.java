@@ -6,9 +6,18 @@ import me.jakeygilly.farmingplugin.utils.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,10 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class MelonAxe extends FarmingTool {
-
-    public MelonAxe(Material material, int amount, String name, List<String> lore, List<ItemFlag> itemFlags, Map<Enchantment, Integer> enchantmentLevels, int durability, boolean unbreakable) {
+    public MelonAxe() {
         super(
                 Material.GOLDEN_AXE,
                 1,
@@ -45,62 +54,69 @@ public class MelonAxe extends FarmingTool {
     }
 
     @Override
-    public void onEquip(Player player) {
+    public void onEquip(PlayerItemHeldEvent event) {
 
     }
 
     @Override
-    public void onUnequip(Player player) {
+    public void onUnequip(PlayerItemHeldEvent event) {
 
     }
 
     @Override
-    public void clickEntity(Player player, Entity target, boolean shifting) {
+    public void clickEntity(PlayerInteractEntityEvent event) {
 
     }
 
     @Override
-    public void punchEntity(Player player, Entity target, double damage, boolean shifting) {
+    public void punchEntity(EntityDamageByEntityEvent event) {
 
     }
 
     @Override
-    public void leftClickOnBlock(Player player, Block block, boolean shifting) {
+    public void leftClickOnBlock(PlayerInteractEvent event) {
 
     }
 
     @Override
-    public void leftClickOnAir(Player player, Block block, boolean shifting) {
+    public void leftClickOnAir(PlayerInteractEvent event) {
 
     }
 
     @Override
-    public void rightClickOnBlock(Player player, Block block, boolean shifting) {
+    public void rightClickOnBlock(PlayerInteractEvent event) {
 
     }
 
     @Override
-    public void rightClickOnAir(Player player, Block block, boolean shifting) {
+    public void rightClickOnAir(PlayerInteractEvent event) {
 
     }
 
     @Override
-    public void onBlockBreak(Player player, Block block, boolean sneaking) {
+    public void onBlockBreak(BlockBreakEvent event) {
+        if (event.getBlock().getType() != Material.MELON) {
+            event.setCancelled(true);
+            return;
+        }
+        List<ItemStack> drops = new ArrayList<ItemStack>() {{
+            addAll(event.getBlock().getDrops());
+        }};
+        for (ItemStack drop : drops) drop.setAmount(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()));
+    }
+
+    @Override
+    public void onDrop(PlayerDropItemEvent event) {
 
     }
 
     @Override
-    public void onDrop(Player player) {
+    public void onPickup(EntityPickupItemEvent event) {
 
     }
 
     @Override
-    public void onPickup(Player player) {
-
-    }
-
-    @Override
-    public void onUpgrade(Player player, ItemStack upgradeItem, int upgradeLevel) {
+    public void onUpgrade(InventoryClickEvent event) {
 
     }
 }
