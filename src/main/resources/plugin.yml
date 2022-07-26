@@ -1,0 +1,9 @@
+name: FarmingPlugin
+version: '${project.version}'
+main: me.jakeygilly.farmingplugin.FarmingPlugin
+api-version: 1.19
+
+commands:
+  giveitem:
+    description: Give an item to a player
+    usage: /giveitem <item>
