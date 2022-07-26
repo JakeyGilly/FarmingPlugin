@@ -1,6 +1,5 @@
 package me.jakeygilly.farmingplugin.items;
 
-import me.jakeygilly.farmingplugin.items.farmingitems.MelonAxe;
 import me.jakeygilly.farmingplugin.utils.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

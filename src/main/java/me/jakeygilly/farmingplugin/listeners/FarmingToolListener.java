@@ -1,7 +1,5 @@
 package me.jakeygilly.farmingplugin.listeners;
 
-import jdk.jfr.internal.LogLevel;
-import jdk.jpackage.internal.Log;
 import me.jakeygilly.farmingplugin.utils.FarmingTool;
 import me.jakeygilly.farmingplugin.utils.UpgradeItem;
 import org.bukkit.entity.Player;
@@ -14,8 +12,6 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.EquipmentSlot;
-
-import java.util.logging.Logger;
 
 public class FarmingToolListener implements Listener {
     @EventHandler

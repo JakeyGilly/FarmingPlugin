@@ -2,7 +2,6 @@ package me.jakeygilly.farmingplugin.utils;
 
 import me.jakeygilly.farmingplugin.FarmingPlugin;
 import me.jakeygilly.farmingplugin.builders.ItemBuilder;
-import me.jakeygilly.farmingplugin.items.farmingitems.MelonAxe;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

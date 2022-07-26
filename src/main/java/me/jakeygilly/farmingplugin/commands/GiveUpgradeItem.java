@@ -2,8 +2,6 @@ package me.jakeygilly.farmingplugin.commands;
 
 import me.jakeygilly.farmingplugin.items.MelonUpgradeItem;
 import me.jakeygilly.farmingplugin.items.PumpUpgradeItem;
-import me.jakeygilly.farmingplugin.items.farmingitems.*;
-import me.jakeygilly.farmingplugin.utils.UpgradeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;

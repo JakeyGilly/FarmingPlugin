@@ -1,6 +1,5 @@
 package me.jakeygilly.farmingplugin.items.farmingitems;
 
-import me.jakeygilly.farmingplugin.items.MelonUpgradeItem;
 import me.jakeygilly.farmingplugin.utils.FarmingTool;
 import me.jakeygilly.farmingplugin.utils.Rarity;
 import me.jakeygilly.farmingplugin.utils.UpgradeItem;
