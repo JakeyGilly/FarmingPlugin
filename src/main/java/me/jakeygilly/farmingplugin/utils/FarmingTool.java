@@ -77,7 +77,9 @@ public abstract class FarmingTool extends Item {
         ItemBuilder itemBuilder = new ItemBuilder(this.getMaterial(), this.getAmount());
         if (this.getName() != null) itemBuilder.setName(this.getFormattedName());
         if (this.getLore() != null) itemBuilder.setLore(this.getFormattedLore());
+        itemBuilder.addLoreLine("");
         itemBuilder.addLoreLine(ChatColor.GRAY + "Upgrade: " + this.getCurrentUpgrade() + "/" + this.getUpgrades());
+        itemBuilder.addLoreLine("");
         if (this.getRarity() != null) {
             StringBuilder s = new StringBuilder();
             for (ChatColor colour : this.getRarity().getColor()) s.append(colour);

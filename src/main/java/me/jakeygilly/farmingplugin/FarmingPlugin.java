@@ -1,7 +1,9 @@
 package me.jakeygilly.farmingplugin;
 
-import me.jakeygilly.farmingplugin.CommandCompleter.GiveItemCompleter;
-import me.jakeygilly.farmingplugin.Commands.GiveItem;
+import me.jakeygilly.farmingplugin.commandcompleter.GiveItemCompleter;
+import me.jakeygilly.farmingplugin.commandcompleter.GiveUpgradeItemCompleter;
+import me.jakeygilly.farmingplugin.commands.GiveItem;
+import me.jakeygilly.farmingplugin.commands.GiveUpgradeItem;
 import me.jakeygilly.farmingplugin.listeners.FarmingToolListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,6 +14,8 @@ public final class FarmingPlugin extends JavaPlugin {
         // Plugin startup logic
         getCommand("giveitem").setExecutor(new GiveItem());
         getCommand("giveitem").setTabCompleter(new GiveItemCompleter());
+        getCommand("giveupgradeitem").setExecutor(new GiveUpgradeItem());
+        getCommand("giveupgradeitem").setTabCompleter(new GiveUpgradeItemCompleter());
         getServer().getPluginManager().registerEvents(new FarmingToolListener(), this);
     }
 

@@ -1,6 +1,6 @@
-package me.jakeygilly.farmingplugin.Commands;
+package me.jakeygilly.farmingplugin.commands;
 
-import me.jakeygilly.farmingplugin.Items.*;
+import me.jakeygilly.farmingplugin.items.farmingitems.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;

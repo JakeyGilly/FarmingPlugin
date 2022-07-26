@@ -1,4 +1,4 @@
-package me.jakeygilly.farmingplugin.CommandCompleter;
+package me.jakeygilly.farmingplugin.commandcompleter;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

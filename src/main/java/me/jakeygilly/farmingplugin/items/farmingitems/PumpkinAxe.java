@@ -1,14 +1,13 @@
-package me.jakeygilly.farmingplugin.Items;
+package me.jakeygilly.farmingplugin.items.farmingitems;
 
+import me.jakeygilly.farmingplugin.items.MelonUpgradeItem;
 import me.jakeygilly.farmingplugin.utils.FarmingTool;
-import me.jakeygilly.farmingplugin.utils.Item;
 import me.jakeygilly.farmingplugin.utils.Rarity;
+import me.jakeygilly.farmingplugin.utils.UpgradeItem;
+import me.jakeygilly.farmingplugin.utils.UpgradeType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
@@ -23,7 +22,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class PumpkinAxe extends FarmingTool {
     public PumpkinAxe() {
@@ -32,7 +30,7 @@ public class PumpkinAxe extends FarmingTool {
                 1,
                 ChatColor.AQUA + "Pumpkin Axe",
                 new ArrayList<String>() {{
-                    add(ChatColor.GRAY + "A tool for harvesting pumpkins.");
+                    add(ChatColor.GRAY + "A axe for harvesting pumpkins.");
                 }},
                 new ArrayList<ItemFlag>() {{
                     add(ItemFlag.HIDE_ENCHANTS);
@@ -99,7 +97,11 @@ public class PumpkinAxe extends FarmingTool {
         List<ItemStack> drops = new ArrayList<ItemStack>() {{
             addAll(event.getBlock().getDrops());
         }};
-        for (ItemStack drop : drops) drop.setAmount(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()));
+        for (ItemStack drop : drops) {
+            drop.setAmount((int)(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()) * (Math.random() * 2) + 1));
+        }
+        event.setDropItems(false);
+        for (ItemStack drop : drops) event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), drop);
     }
 
     @Override
@@ -114,6 +116,16 @@ public class PumpkinAxe extends FarmingTool {
 
     @Override
     public void onUpgrade(InventoryClickEvent event) {
-
+        UpgradeItem upgradeItem = UpgradeItem.getUpgradeItem(event.getCursor());
+        if (upgradeItem.getUpgradeType() != UpgradeType.PUMPUPGRADE) return;
+//        if (!(upgradeItem.getUpgradeLevel() == this.getCurrentUpgrade() + 1)) return;
+        if (this.getUpgrades() < this.getCurrentUpgrade()) {
+            event.getWhoClicked().sendMessage(String.format("%sYou have maxed out this axe's upgrades.", ChatColor.RED));
+            event.setCancelled(true);
+            return;
+        }
+        this.setCurrentUpgrade(this.getCurrentUpgrade() + 1);
+        event.setCurrentItem(this.getItem());
+        event.getWhoClicked().setItemOnCursor(null);
     }
 }

@@ -1,15 +1,11 @@
-package me.jakeygilly.farmingplugin.Items;
+package me.jakeygilly.farmingplugin.items.farmingitems;
 
 import me.jakeygilly.farmingplugin.utils.FarmingTool;
-import me.jakeygilly.farmingplugin.utils.Item;
 import me.jakeygilly.farmingplugin.utils.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
@@ -20,36 +16,33 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
-public class WheatTool extends FarmingTool {
-    public WheatTool() {
+public class CarrotTool extends FarmingTool {
+    public CarrotTool() {
         super(
-                Material.GOLDEN_HOE,
-                1,
-                ChatColor.AQUA + "Wheat Tool",
-                new ArrayList<String>() {{
-                    add(ChatColor.GRAY + "A tool for harvesting wheat.");
-                }},
-                new ArrayList<ItemFlag>() {{
-                    add(ItemFlag.HIDE_ENCHANTS);
-                    add(ItemFlag.HIDE_ATTRIBUTES);
-                    add(ItemFlag.HIDE_UNBREAKABLE);
-                }},
-                new HashMap<Enchantment, Integer>() {{
-                    put(Enchantment.MENDING, 1);
-                }},
-                0,
-                true,
-                Rarity.UNCOMMON,
-                0,
-                20
+            Material.GOLDEN_HOE,
+            1,
+            ChatColor.AQUA + "Carrot Tool",
+            new ArrayList<String>() {{
+                add(ChatColor.GRAY + "A tool for harvesting carrots.");
+            }},
+            new ArrayList<ItemFlag>() {{
+                add(ItemFlag.HIDE_ENCHANTS);
+                add(ItemFlag.HIDE_ATTRIBUTES);
+                add(ItemFlag.HIDE_UNBREAKABLE);
+            }},
+            new HashMap<Enchantment, Integer>() {{
+                put(Enchantment.MENDING, 1);
+            }},
+            0,
+            true,
+            Rarity.UNCOMMON,
+            0,
+            20
         );
     }
 
@@ -95,7 +88,7 @@ public class WheatTool extends FarmingTool {
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
-        if (event.getBlock().getType() != Material.WHEAT) {
+        if (event.getBlock().getType() != Material.CARROTS) {
             event.setCancelled(true);
             return;
         }
@@ -107,15 +100,8 @@ public class WheatTool extends FarmingTool {
         List<ItemStack> drops = new ArrayList<ItemStack>() {{
             addAll(event.getBlock().getDrops());
         }};
-        for (ItemStack itemStack : drops) {
-            Logger.getLogger("FarmingPlugin").info(itemStack.toString());
-        }
         for (ItemStack drop : drops) {
-            if (drop.getType() == Material.WHEAT) {
-                drop.setAmount((int)(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()) * (Math.random() * 2) + 1));
-            } else {
-                drop.setAmount(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()));
-            }
+            drop.setAmount((int)(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()) * (Math.random() * 2) + 1));
         }
         event.setDropItems(false);
         for (ItemStack drop : drops) event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), drop);

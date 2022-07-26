@@ -1,15 +1,11 @@
-package me.jakeygilly.farmingplugin.Items;
+package me.jakeygilly.farmingplugin.items.farmingitems;
 
 import me.jakeygilly.farmingplugin.utils.FarmingTool;
-import me.jakeygilly.farmingplugin.utils.Item;
 import me.jakeygilly.farmingplugin.utils.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
@@ -20,21 +16,19 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Logger;
 
-public class PotatoTool extends FarmingTool {
-    public PotatoTool() {
+public class WheatTool extends FarmingTool {
+    public WheatTool() {
         super(
                 Material.GOLDEN_HOE,
                 1,
-                ChatColor.AQUA + "Potato Tool",
+                ChatColor.AQUA + "Wheat Tool",
                 new ArrayList<String>() {{
-                    add(ChatColor.GRAY + "A tool for harvesting potatoes.");
+                    add(ChatColor.GRAY + "A tool for harvesting wheat.");
                 }},
                 new ArrayList<ItemFlag>() {{
                     add(ItemFlag.HIDE_ENCHANTS);
@@ -94,16 +88,27 @@ public class PotatoTool extends FarmingTool {
 
     @Override
     public void onBlockBreak(BlockBreakEvent event) {
-        if (event.getBlock().getType() != Material.POTATOES) {
+        if (event.getBlock().getType() != Material.WHEAT) {
             event.setCancelled(true);
             return;
         }
         Ageable ageable = (Ageable) event.getBlock().getBlockData();
-        if (ageable.getAge() != 7) event.setCancelled(true);
+        if (ageable.getAge() != 7) {
+            event.setCancelled(true);
+            return;
+        }
         List<ItemStack> drops = new ArrayList<ItemStack>() {{
             addAll(event.getBlock().getDrops());
         }};
-        for (ItemStack drop : drops) drop.setAmount(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()));
+        for (ItemStack drop : drops) {
+            if (drop.getType() == Material.WHEAT) {
+                drop.setAmount((int)(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()) * (Math.random() * 2) + 1));
+            } else {
+                drop.setAmount(drop.getAmount() * (int) (0.2 * this.getCurrentUpgrade()));
+            }
+        }
+        event.setDropItems(false);
+        for (ItemStack drop : drops) event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), drop);
     }
 
     @Override
@@ -118,6 +123,13 @@ public class PotatoTool extends FarmingTool {
 
     @Override
     public void onUpgrade(InventoryClickEvent event) {
-
+        if (this.getUpgrades() < this.getCurrentUpgrade()) {
+            event.getWhoClicked().sendMessage(String.format("%sYou have maxed out this tool's upgrades.", ChatColor.RED));
+            event.setCancelled(true);
+            return;
+        }
+        this.setCurrentUpgrade(this.getCurrentUpgrade() + 1);
+        event.setCurrentItem(this.getItem());
+        event.getWhoClicked().setItemOnCursor(null);
     }
 }

@@ -7,3 +7,6 @@ commands:
   giveitem:
     description: Give an item to a player
     usage: /giveitem <item>
+  giveupgradeitem:
+    description: Give an upgrade item to a player
+    usage: /giveupgradeitem <item> <level>
